@@ -1,0 +1,50 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import odeint
+
+sigma = 10
+rho = 28
+beta = 8 / 3
+
+
+def lorentz(s, t):
+    x, y, z = s[0], s[1], s[2]
+    dxdt = sigma * (y - x)
+    dydt = x * (rho - z)
+    dzdt = x * y - beta * z
+    return [dxdt, dydt, dzdt]
+
+
+s0 = [0, 1, 0]
+t = np.linspace(0, 100, 100000)
+
+sol = odeint(lorentz, s0, t)
+x = sol[:, 0]
+y = sol[:, 1]
+z = sol[:, 2]
+
+
+plt.figure(1,figsize=(10, 10))
+plt.title('Lorentz Attractor x-y plot')
+
+plt.text(17, -28, 'SABYASACHI', color='#111e4c')
+
+
+
+plt.plot(x,y , c='#22527b',linestyle='-')
+
+
+plt.figure(figsize=(10, 10))
+plt.title('Lorentz Attractor x-z plot')
+
+plt.text(16, 0, 'SABYASACHI', color='#831910')
+plt.plot(x,z , c='#b80f0a',linestyle='-')
+
+
+plt.figure(figsize=(10, 10))
+plt.title('Lorentz Attractor y-z plot')
+
+plt.text(25, 0, 'SABYASACHI', color='#008081')
+
+plt.plot(y,z , c='#008c8c',linestyle='-')
+plt.show()
